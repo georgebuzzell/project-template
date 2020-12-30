@@ -5,7 +5,7 @@ project_name=$1
 file_paths=$(grep -R project_name 2>/dev/null | cat | grep -v "init" | cut -d ":" -f 1)
 
 for path in $file_paths; do
-	echo sed -i -Ee "s/project_name/"$project_name"/g" $path
+	sed -i -Ee "s/project_name/"$project_name"/g" $path
 done
 
 exit
