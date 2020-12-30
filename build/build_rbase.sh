@@ -1,19 +1,16 @@
 #!/bin/env bash
 
-# Filter based on release or dev
 if [[ "$1" == "release" ]]; then
-	req_filter=$(ls ./requirements* | grep -v "dev")
 	rdep_filter=$(ls ./r_packages* | grep -v "dev")
 else
-	req_filter=$(ls ./requirements*)
+	# dev
 	rdep_filter=$(ls ./r_packages*)
-fi
 
-# install all python packages
-for req_file in $req_filter
-do
-	pip3 install -r $req_file
-done
+	# Necessary for lintr
+	apt-get update
+	apt-get install -y libssl-dev libcurl4-openssl-dev libxml2-dev
+	apt-get clean
+fi
 
 # install all R packages
 for rdep_file in $rdep_filter
